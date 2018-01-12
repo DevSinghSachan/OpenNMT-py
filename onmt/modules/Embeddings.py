@@ -119,7 +119,7 @@ class Embeddings(nn.Module):
                       for vocab, dim, pad in emb_params]
 
         for embed in embeddings:
-            vsize, _ = embed.shape
+            vsize, _ = embed.weight.data.size()
             embed.weight.data.uniform_(-3. / vsize, 3. / vsize)
 
         emb_luts = Elementwise(feat_merge, embeddings)
