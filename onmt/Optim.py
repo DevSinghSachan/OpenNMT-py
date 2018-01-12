@@ -85,11 +85,8 @@ class Optim(object):
 
         # Decay method used in tensor2tensor.
         if self.decay_method == "noam":
-            self._set_rate(
-                self.original_lr *
-                (self.model_size ** (-0.5) *
-                 min(self._step ** (-0.5),
-                     self._step * self.warmup_steps**(-1.5))))
+            self._set_rate(self.original_lr * (self.model_size ** (-0.5) * min(self._step ** (-0.5),
+                                                                               self._step * self.warmup_steps**(-1.5))))
 
         if self.max_grad_norm:
             clip_grad_norm(self.params, self.max_grad_norm)

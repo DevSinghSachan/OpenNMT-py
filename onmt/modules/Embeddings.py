@@ -117,6 +117,11 @@ class Embeddings(nn.Module):
         emb_params = zip(vocab_sizes, emb_dims, pad_indices)
         embeddings = [nn.Embedding(vocab, dim, padding_idx=pad)
                       for vocab, dim, pad in emb_params]
+
+        for embed in embeddings:
+            vsize, _ = embed.size()
+            embed.weight.data.uniform_(-3. / vsize, 3. / vsize)
+
         emb_luts = Elementwise(feat_merge, embeddings)
 
         # The final output size of word + feature vectors. This can vary

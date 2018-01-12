@@ -84,8 +84,9 @@ def seq_func(func, x, reconstruct_shape=True):
     e = func(e)
     if not reconstruct_shape:
         return e
-    e = torch.transpose(e.view((batch, length, units)), 1, 2).contiguous()
-    assert (e.shape == (batch, units, length))
+    out_units = e.shape[1]
+    e = torch.transpose(e.view((batch, length, out_units)), 1, 2).contiguous()
+    assert (e.shape == (batch, out_units, length))
     return e
 
 
@@ -134,9 +135,7 @@ class LinearSent(nn.Module):
         self.output_dim = output_dim
 
     def forward(self, x):
-        output = self.L.weight.matmul(x)
-        if self.L.bias is not None:
-            output += self.L.bias.unsqueeze(-1)
+        output = seq_func(self.L, x)
         return output
 
 
