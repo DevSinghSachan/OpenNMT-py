@@ -186,8 +186,8 @@ class MultiHeadAttention(nn.Module):
         batch_A = batch_A.masked_fill(batch_A != batch_A, 0.)
         assert (batch_A.shape == (batch * h, n_querys, n_keys))
 
-        # probabiliy, B x T x S
-        top_attns = torch.cat(torch.chunk(batch_A, h, dim=0), dim=1)
+        # probabiliy, B x T x S . Taking the top multi-heads
+        top_attns = batch_A[:batch]
 
         # Attention Dropout
         if self.attn_dropout:
