@@ -92,6 +92,9 @@ class Optim(object):
             clip_grad_norm(self.params, self.max_grad_norm)
         self.optimizer.step()
 
+        if self._step % 50 == 0:
+            print("Learning Rate=%.2e" % self.lr)
+
     def update_learning_rate(self, ppl, epoch):
         """
         Decay learning rate if val perf does not improve
