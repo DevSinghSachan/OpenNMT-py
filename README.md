@@ -135,3 +135,8 @@ The following pretrained models can be downloaded and used with translate.py (Th
   doi       = {10.18653/v1/P17-4012}
 }
 ```
+
+
+b onmt/modules/Transformer:111
+out.shape
+torch.Size([31, 100, 512]) # L x B X units
